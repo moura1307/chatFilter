@@ -1,0 +1,15 @@
+name: chatFilter
+version: '${project.version}'
+main: coffee.chatFilter.ChatFilter
+api-version: '1.21'
+authors: [ Coffee1307 ]
+description: Simple chat filter
+commands:
+  togglefilter:
+    description: Toggle the bad word filter for yourself.
+    usage: /togglefilter <true/false>
+    permission: filter.use
+  globalfilter:
+    description: Enable or disable the filter for the entire server.
+    usage: /globalfilter <true/false>
+    permission: filter.admin
