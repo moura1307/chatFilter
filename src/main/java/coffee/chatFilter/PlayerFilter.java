@@ -21,7 +21,6 @@ public class PlayerFilter implements CommandExecutor, Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // Locked check via manager
         if (manager.isCommandLocked() && !sender.hasPermission("filter.admin")) {
             sender.sendMessage(ChatColor.RED + "This command is currently disabled by an administrator.");
             return true;
@@ -53,13 +52,10 @@ public class PlayerFilter implements CommandExecutor, Listener {
         String lowerMsg = originalMessage.toLowerCase();
         String normalizedMsg = lowerMsg.replaceAll("[._\\-]", "");
 
-        // We pull the badWords and whiteList from the manager now!
         for (String badWord : manager.getBadWords()) {
 
-            // Skip if not present
             if (!lowerMsg.contains(badWord) && !normalizedMsg.contains(badWord)) continue;
 
-            // Check Whitelist
             boolean isSafe = false;
             for (String safeWord : manager.getWhiteList()) {
                 if (lowerMsg.contains(safeWord) && safeWord.contains(badWord)) {
@@ -69,7 +65,6 @@ public class PlayerFilter implements CommandExecutor, Listener {
             }
             if (isSafe) continue;
 
-            // Apply Stars
             String stars = "*".repeat(badWord.length());
 
             // 1. Standard replacement
@@ -88,7 +83,6 @@ public class PlayerFilter implements CommandExecutor, Listener {
 
         if (originalMessage.equals(censoredMessage)) return;
 
-        // Custom delivery logic
         String finalCensoredMessage = censoredMessage;
         e.getRecipients().removeIf(recipient -> {
             if (manager.isGlobalFilter() || manager.getSensitivePlayers().contains(recipient.getUniqueId())) {

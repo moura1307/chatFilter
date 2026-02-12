@@ -16,7 +16,6 @@ public class WorldFilter implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // Allow players with filter.admin OR console to use this
         if (!sender.hasPermission("filter.admin")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this!");
             return true;
@@ -25,7 +24,6 @@ public class WorldFilter implements CommandExecutor {
         if (args.length >= 1) {
             boolean active = args[0].equalsIgnoreCase("true");
 
-            // Tell the manager to flip the switches
             manager.setGlobalFilter(active);
             manager.setCommandLocked(active);
             manager.saveConfigSettings();
